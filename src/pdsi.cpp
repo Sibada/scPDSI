@@ -1,9 +1,9 @@
 #include "pdsi.h"
 
-#include <stdlib.h>
+//#include <stdlib.h>
 #include <math.h>
 #include <cstring>
-#include <stdio.h>
+//#include <stdio.h>
 #include <ctype.h>
 
 
@@ -3086,6 +3086,7 @@ void pdsi::CalcWBCoef() {
 // If it is a sc_monthly PDSI, it will go to the "sc_monthly/" directory
 //-----------------------------------------------------------------------------
 void pdsi::Write() {
+  /*
   char full_path[128];
 
   if(Xlist.is_empty()){
@@ -3106,7 +3107,7 @@ void pdsi::Write() {
     Write((char *)"monthly/original");
   else if(SCMonthly)
     Write((char *)"monthly/self_cal");
-
+*/
 }
 //-----------------------------------------------------------------------------
 // The Write(char* directory) function will write the PDSI to the specified
@@ -3117,6 +3118,7 @@ void pdsi::Write() {
 // be treated as a relative path to the current directory.
 //-----------------------------------------------------------------------------
 void pdsi::Write(char *directory) {
+  /*
   unsigned int i = 0;
   //int e = 0;                            //error flag
   char base[128];                       //string for base dir path
@@ -3180,8 +3182,10 @@ void pdsi::Write(char *directory) {
     FinalWrite(full_path);
     MoveFiles(full_path);
   }
+   */
 }
 void pdsi::WriteCMI(char* dir) {
+  /*
   int cyear=startyear;
   int prev, cur, saved_per, change_per;
   number c;
@@ -3255,6 +3259,7 @@ void pdsi::WriteCMI(char* dir) {
   }
   //if(verbose > 0)
   //  printf("%4s Weekly CMI written to %s\n","*",dir);
+   */
 }
 //-----------------------------------------------------------------------------
 // The FinalWrite function creates 4 or 8 output files based on the output_mode
@@ -3263,6 +3268,7 @@ void pdsi::WriteCMI(char* dir) {
 // also done within this function.
 //-----------------------------------------------------------------------------
 void pdsi::FinalWrite(char* dir) {
+  /*
   int cyear=startyear;
   int prev, cur, saved_per, change_per;
   number x, x1, x2, x3, p, wp, ph, z;
@@ -3430,7 +3436,7 @@ void pdsi::FinalWrite(char* dir) {
     }
     prev = cur;
   }
-  /*
+
   if(verbose > 0){
     if(Weekly){
       if(period_length == 1)
@@ -3452,6 +3458,7 @@ void pdsi::FinalWrite(char* dir) {
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void pdsi::MoveCMIFiles(char* dir) {
+  /*
   char filename[170];
   sprintf(filename,"%s%s",dir,"CMI_calc.tbl");
   remove(filename);
@@ -3475,10 +3482,12 @@ void pdsi::MoveCMIFiles(char* dir) {
   //  if(ReprintFile((char *)"WB.tbl",(char *)filename) == -1 && verbose > 0)
   //    printf("Unable to rename WB.tbl file as \"%s\".\n",filename);
   //}
+   */
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void pdsi::MoveFiles(char* dir) {
+  /*
   char filename[170];
   //remove any files that might already be in the director
   sprintf(filename,"%s%s",dir,"potentials");
@@ -3520,8 +3529,10 @@ void pdsi::MoveFiles(char* dir) {
     //    printf("Unable to rename WB.tbl file as \"%s\".\n",filename);
     //}
   }
+   */
 }
 int pdsi::ReprintFile(char* src, char *des){
+  /*
   FILE *in, *out;
   char line[4096];
   in = fopen(src,"r");
@@ -3543,6 +3554,8 @@ int pdsi::ReprintFile(char* src, char *des){
     fclose(out);
     return -1;
   }
+   */
+  return 0;
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -4740,6 +4753,7 @@ int dir_exists(char *dir) {
   //---------------------------------------------------------------------------
   //Windows version
   //---------------------------------------------------------------------------
+  /*
   FILE* test;
   char test_file[128];
 
@@ -4764,7 +4778,8 @@ int dir_exists(char *dir) {
   remove(test_file);
   return 1;
   //---------------------------------------------------------------------------
-
+*/
+  return 0;
 }
 //-----------------------------------------------------------------------------
 //The create_dir function will create all directories given in the argument
@@ -4778,6 +4793,7 @@ int dir_exists(char *dir) {
 //Returns 1 if the directory already exists.
 //-----------------------------------------------------------------------------
 int create_dir(char *path) {
+  /*
   //---------------------------------------------------------------------------
   //unix version
   //---------------------------------------------------------------------------
@@ -4811,6 +4827,7 @@ int create_dir(char *path) {
     i++;
   }
   return return_value;
+   */
   //---------------------------------------------------------------------------
   //Windows Version
   //---------------------------------------------------------------------------
@@ -4844,5 +4861,6 @@ int create_dir(char *path) {
   return return_value;
   */
   //---------------------------------------------------------------------------
+  return 0;
 }
 

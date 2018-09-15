@@ -135,10 +135,10 @@ lines(gb_pdsi$X, col = 'red')
 
 }
 \references{
-Palmer W. Meteorological drought[J]. U.s.department of Commerce Weather
-            Bureau Research Paper, 1965.
+Palmer W., 1965. Meteorological drought. U.s.department of Commerce
+            Weather Bureau Research Paper.
 
-            Wells N, Goddard S, Hayes M J. A Self-Calibrating Palmer Drought Severity
-            Index[J]. Journal of Climate, 2010, 17(12):2335-2351.
+            Wells N., Goddard S., Hayes M. J., 2004. A Self-Calibrating Palmer
+            Drought Severity Index. Journal of Climate, 17(12):2335-2351.
 }
 

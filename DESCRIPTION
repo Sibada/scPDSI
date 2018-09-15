@@ -1,6 +1,6 @@
 Package: scPDSI
 Type: Package
-Title: Calculation of the Conventional and Self-Calibrating Palmer Drought Severity Index.
+Title: Calculation of the Conventional and Self-Calibrating Palmer Drought Severity Index
 Version: 0.1.0
 Authors@R: c(person("Ruida", "Zhong", email = "zrd2017@163.com", role = c("aut", "cre")),
     person("Xiaohong", "Chen", role = c("aut", "ctb")))
@@ -8,13 +8,13 @@ Description: Calculating the monthly conventional and self-calibrating Palmer Dr
     Index (PDSI and scPDSI) using the precipitation and potential evapotranspiration data.
     The function to calculate PDSI is based on the C++ source codes developed by Nathan Wells,
     Steve Goddard and Michael J. Hayes, University of Nebraska¡ªLincoln. Reference:
-    Palmer W. Meteorological drought[J]. U.s.department of Commerce Weather Bureau Research Paper, 1965.
-    Wells N, Goddard S, Hayes M J. A Self-Calibrating Palmer Drought Severity Index[J]. Journal of Climate, 2010, 17(12):2335-2351.
+    Palmer W., 1965. Meteorological drought. U.s.department of Commerce Weather Bureau Research Paper.
+    Wells N., Goddard S., Hayes M. J., 2004. A Self-Calibrating Palmer Drought Severity Index. Journal of Climate, 17(12):2335-2351.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
-    R (>= 2.1.0)
+    R (>= 3.0.0)
 Imports:
     stats,
     Rcpp (>= 0.12.0)
