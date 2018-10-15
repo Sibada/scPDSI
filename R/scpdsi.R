@@ -133,7 +133,7 @@ NULL
 #' @references Palmer W., 1965. Meteorological drought. U.s.department of Commerce
 #'             Weather Bureau Research Paper.
 #'
-#'             Wells N., Goddard S., Hayes M. J., 2004. A Self-Calibrating Palmer
+#'             Wells, N., Goddard, S., Hayes, M. J., 2004. A Self-Calibrating Palmer
 #'             Drought Severity Index. Journal of Climate, 17(12):2335-2351.
 #'
 #' @examples

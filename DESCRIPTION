@@ -1,20 +1,30 @@
 Package: scPDSI
 Type: Package
-Title: Calculation of the Conventional and Self-Calibrating Palmer Drought Severity Index
+Title: Calculation of the Conventional and Self-Calibrating Palmer Drought
+    Severity Index
 Version: 0.1.0
 Authors@R: c(person("Ruida", "Zhong", email = "zrd2017@163.com", role = c("aut", "cre")),
-    person("Xiaohong", "Chen", role = c("aut", "ctb")))
-Description: Calculating the monthly conventional and self-calibrating Palmer Drought Severity
-    Index (PDSI and scPDSI) using the precipitation and potential evapotranspiration data.
-    The function to calculate PDSI is based on the C++ source codes developed by Nathan Wells,
-    Steve Goddard and Michael J. Hayes, University of Nebraska¡ªLincoln. Reference:
-    Palmer W., 1965. Meteorological drought. U.s.department of Commerce Weather Bureau Research Paper.
-    Wells N., Goddard S., Hayes M. J., 2004. A Self-Calibrating Palmer Drought Severity Index. Journal of Climate, 17(12):2335-2351.
+    person("Xiaohong", "Chen", email = "eescxh@mail.sysu.edu.cn", role = c("aut", "ctb")),
+    person("Zhaoli", "Wang", email = "wangzhl@scut.edu.cn", role = c("aut", "ctb")),
+    person("Chengguang", "Lai", email = "laichg@scut.edu.cn", role = c("aut", "ctb")),
+    person("Steve", "Goddard", role = c("ctb")),
+    person("Nathan", "Wells", role = c("ctb")),
+    person("Mike", "Hayes", role = c("ctb")))
+Description: Calculating the monthly conventional and self-calibrating Palmer
+    Drought Severity Index (PDSI and scPDSI) using the precipitation and potential
+    evapotranspiration data. The function to calculate PDSI is based on the C++ 
+    source codes developed by Nathan Wells, Steve Goddard and Michael J. Hayes,
+    University of Nebraska-Lincoln.
+    Reference: Palmer W. (1965). Meteorological drought.
+    U.s.department of Commerce Weather Bureau Research Paper,
+    <https://www.ncdc.noaa.gov/temp-and-precip/drought/docs/palmer.pdf>;
+    Wells N., Goddard S., Hayes M. J. (2004). A Self-Calibrating Palmer Drought Severity Index.
+    Journal of Climate, 17(12):2335-2351, <DOI:10.1175/1520-0442(2004)017%3C2335:ASPDSI%3E2.0.CO;2>.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Depends:
-    R (>= 3.0.0)
+    R (>= 2.10)
 Imports:
     stats,
     Rcpp (>= 0.12.0)
