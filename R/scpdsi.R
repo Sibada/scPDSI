@@ -143,11 +143,11 @@ NULL
 #' P <- Lubuge$P
 #' PE <- Lubuge$PE
 #' sc_pdsi <- pdsi(P, PE, start = 1960)
-#' plot(sc_pdsi$X)
+#' plot(sc_pdsi)
 #'
 #' # Without self-calibrating.
 #' ori_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
-#' plot(ori_pdsi$X)
+#' plot(ori_pdsi)
 #'
 #' # Without self-calibrating and use standards of
 #' # mainland China. (GB/T 20481-2006)
@@ -157,7 +157,7 @@ NULL
 #' options(PDSI.p = 0.755)
 #' options(PDSI.q = 1/1.63)
 #' gb_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
-#' lines(gb_pdsi$X, col = 'red')
+#' plot(gb_pdsi)
 #'
 #' @export
 pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, cal_end = NULL,
@@ -203,8 +203,73 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
   out$clim.coes <- clim.coes
   out$calib.coes <- calib.coes
 
+  out$self.calib <- sc
+  out$range <- c(start, end)
+  out$range.ref <- c(cal_start, cal_end)
+
   class(out) <- "pdsi"
   out
 }
 
+#' @title plot (sc)PDSI
+#'
+#' @description plot the timeseries of calculated (sc)PDSI.
+#'
+#' @param x an object of class \code{pdsi}.
+#' @param tit title of the plot.
+#' @param ... additional parameters, not used at present.
+#'
+#' @details  Plot the timeseries of (sc)PDSI using function\code{\link{pdsi}}.
+#' Values over 6 or below -6 and NA values would be shown by grey points.
+#'
+#' @importFrom graphics plot polygon abline lines points
+#' @seealso
+#' \code{\link{pdsi}}
+#'
+#' @export
+plot.pdsi <- function(x, tit = NULL, ...) {
+  # Codes are referenced from the plot function of SPEI by Begueria et al.,
+  # see package `SPEI`.
+  ser <- x$X
+  sup <- ifelse(ser > 6, 6, NA)
+  sdn <- ifelse(ser < -6, -6, NA)
 
+  ser[is.na(ser)] <- 0
+  ser[ser > 6] <- 6
+  ser[ser < -6] <- -6
+  sna <- ifelse(ser == 0, 0, NA)
+
+  # Copy from source code of SPEI
+  if (start(ser)[2]==1) {
+    ns <- c(start(ser)[1]-1, 12)
+  } else {
+    ns <- c(start(ser)[1], start(ser)[2]-1)
+  }
+  if (end(ser)[2]==12) {
+    ne <- c(end(ser)[1]+1, 1)
+  } else {
+    ne <- c(end(ser)[1], end(ser)[2]+1)
+  }
+
+  label <- ifelse(x$self.calib, 'scPDSI', 'PDSI')
+
+  ser2 <- ts(c(0, ser, 0),frequency=frequency(ser), start=ns,end=ne)
+  ser2.p <- ifelse(ser2 > 0, ser2, 0)
+  ser2.n <- ifelse(ser2 <= 0, ser2, 0)
+  plot(ser2, type='n', xlab='', ylab=paste(label, "(X-values)"), main=tit)
+  if (!all(x$range == x$range.ref)) {
+    k <- ts(8, start = c(x$range.ref[1],1), end = c(x$range.ref[2], 12), frequency=12)
+    k[1] <- k[length(k)] <- -8
+    polygon(k, col='#cccccc', border=NA, density=15)
+    abline(v=x$range.ref[1], col='#888888')
+    abline(v=x$range.ref[2]+1, col='#888888')
+  }
+  #grid(col='#666666', nx = NA, ny = NULL, lty=2)
+  polygon(ser2.p, col = 'black', border=NA)
+  polygon(ser2.n, col = 'black', border=NA)
+  lines(ser2)
+  abline(h=0)
+  points(sna, pch=21, col='white', bg='#888888')
+  points(sup, pch=21, col='white', bg='#888888')
+  points(sdn, pch=21, col='white', bg='#888888')
+}

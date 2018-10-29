@@ -117,11 +117,11 @@ data(Lubuge)
 P <- Lubuge$P
 PE <- Lubuge$PE
 sc_pdsi <- pdsi(P, PE, start = 1960)
-plot(sc_pdsi$X)
+plot(sc_pdsi)
 
 # Without self-calibrating.
 ori_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
-plot(ori_pdsi$X)
+plot(ori_pdsi)
 
 # Without self-calibrating and use standards of
 # mainland China. (GB/T 20481-2006)
@@ -131,7 +131,7 @@ options(PDSI.coe.K2 = 16.84)
 options(PDSI.p = 0.755)
 options(PDSI.q = 1/1.63)
 gb_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
-lines(gb_pdsi$X, col = 'red')
+plot(gb_pdsi)
 
 }
 \references{
