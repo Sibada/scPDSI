@@ -159,6 +159,8 @@ NULL
 #' gb_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
 #' plot(gb_pdsi)
 #'
+#' @importFrom stats ts
+#'
 #' @export
 pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, cal_end = NULL,
                  sc = TRUE) {
@@ -187,8 +189,8 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
   inter.vars[inter.vars == -999.] <- NA
 
   out <- list(call = match.call(expand.dots=FALSE),
-              X = stats::ts(inter.vars[, 14], start = start, frequency = freq),
-              inter.vars = stats::ts(inter.vars[, 3:13], start = start, frequency = freq))
+              X = ts(inter.vars[, 14], start = start, frequency = freq),
+              inter.vars = ts(inter.vars[, 3:13], start = start, frequency = freq))
 
   colnames(out$inter.vars) <- c("P", "PE", "PR", "PRO", "PL", "d", "Z",
                                 "Prob", "X1", "X2", "X3")
@@ -223,6 +225,7 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
 #' Values over 6 or below -6 and NA values would be shown by grey points.
 #'
 #' @importFrom graphics plot polygon abline lines points
+#' @importFrom stats start end ts frequency
 #' @seealso
 #' \code{\link{pdsi}}
 #'

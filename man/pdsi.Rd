@@ -124,7 +124,7 @@ ori_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
 plot(ori_pdsi)
 
 # Without self-calibrating and use standards of
-# mainland China. (GB/T 20481-2006)
+# mainland China. (GB/T 20481-2017)
 options(PDSI.coe.K1.1 = 1.6)
 options(PDSI.coe.K1.3 = 0.4)
 options(PDSI.coe.K2 = 16.84)
