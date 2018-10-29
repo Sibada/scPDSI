@@ -153,7 +153,7 @@ public:
 
   NumericMatrix vals_mat;
   NumericMatrix coefs_mat;
-  
+
   //NumericVector d_vec;
   //NumericVector Z_vec;
 

@@ -1,7 +1,7 @@
 #include "pdsi.h"
 
 //#include <stdlib.h>
-#include <math.h>
+//#include <math.h>
 #include <cstring>
 //#include <stdio.h>
 #include <ctype.h>

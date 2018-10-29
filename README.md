@@ -12,13 +12,13 @@ This package is build up on the C++ codes of the scPDSI provided by Nathan Wells
 
 Get it from the CRAN repository:
 
-```r
+```R
 install.packages('scPDSI')
 ```
 
 Or install from GitHub (usually the development version):
 
-```r
+```R
 library(devtools)
 install_github('Sibada', 'scPDSI')
 ```
