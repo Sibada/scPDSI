@@ -2,7 +2,7 @@ Package: scPDSI
 Type: Package
 Title: Calculation of the Conventional and Self-Calibrating Palmer Drought
     Severity Index
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person("Ruida", "Zhong", email = "zrd2017@163.com", role = c("aut", "cre")),
     person("Xiaohong", "Chen", email = "eescxh@mail.sysu.edu.cn", role = c("aut", "ctb")),
     person("Zhaoli", "Wang", email = "wangzhl@scut.edu.cn", role = c("aut", "ctb")),

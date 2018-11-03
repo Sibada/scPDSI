@@ -1,7 +1,7 @@
 #include "pdsi.h"
 
 //#include <stdlib.h>
-//#include <math.h>
+#include <math.h>
 #include <cstring>
 //#include <stdio.h>
 #include <ctype.h>
@@ -4626,7 +4626,7 @@ number llist::quartile(int q) {
     //so take the weighted average of the two closest numbers
     int k;
     if((k = ((size-1)%4)) != 0){
-      int bottom = (int)floor(q*(size-1)/4);
+      int bottom = (int)std::floor(q*(size-1)/4);
       double t1 = (4-k) * kthLargest(bottom+1);
       double t2 = (k) * kthLargest(bottom+2);
       return (t1+t2)/4;
