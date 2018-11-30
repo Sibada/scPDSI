@@ -36,6 +36,8 @@ The object of class \code{pdsi} is a list containing the following components:
 \itemize{
   \item call: the call to \code{pdsi} used to generate the object.
   \item X: time series of the X values, i.e. the Palmer Drought Severity Index (PDSI).
+  \item PHDI: time series of the Palmer hydrological drought index (PHDI).
+  \item WPLM: time series of the weighted PDSI (WPLM).
   \item inter.vars: An time series matrix containing the intermediate variables,
   including \code{P} (input precipitation), \code{PE} (input potential
   evapotranspiration), \code{PR} (potential recharge of soil moisture),
@@ -52,7 +54,6 @@ The object of class \code{pdsi} is a list containing the following components:
   \code{K2} (ratio to adjust K coefficient) for wet and dry spell, respectively.
   Note that the P and PE would be convered from mm to inch in the calculation,
   therefore the units of \code{m}, \code{b} would also be inch correspondingly.
-
 }
 }
 \description{
@@ -117,7 +118,10 @@ data(Lubuge)
 P <- Lubuge$P
 PE <- Lubuge$PE
 sc_pdsi <- pdsi(P, PE, start = 1960)
-plot(sc_pdsi)
+
+plot(sc_pdsi) # plot PDSI
+plot(sc_pdsi, index = "PHDI") # plot PHDI
+plot(sc_pdsi, index = "WPLM") # plot weighted PDSI
 
 # Without self-calibrating.
 ori_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)

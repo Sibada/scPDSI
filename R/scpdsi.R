@@ -111,6 +111,8 @@ NULL
 #' \itemize{
 #'   \item call: the call to \code{pdsi} used to generate the object.
 #'   \item X: time series of the X values, i.e. the Palmer Drought Severity Index (PDSI).
+#'   \item PHDI: time series of the Palmer hydrological drought index (PHDI).
+#'   \item WPLM: time series of the weighted PDSI (WPLM).
 #'   \item inter.vars: An time series matrix containing the intermediate variables,
 #'   including \code{P} (input precipitation), \code{PE} (input potential
 #'   evapotranspiration), \code{PR} (potential recharge of soil moisture),
@@ -127,7 +129,6 @@ NULL
 #'   \code{K2} (ratio to adjust K coefficient) for wet and dry spell, respectively.
 #'   Note that the P and PE would be convered from mm to inch in the calculation,
 #'   therefore the units of \code{m}, \code{b} would also be inch correspondingly.
-#'
 #' }
 #'
 #' @references Palmer W., 1965. Meteorological drought. U.s.department of Commerce
@@ -143,7 +144,10 @@ NULL
 #' P <- Lubuge$P
 #' PE <- Lubuge$PE
 #' sc_pdsi <- pdsi(P, PE, start = 1960)
-#' plot(sc_pdsi)
+#'
+#' plot(sc_pdsi) # plot PDSI
+#' plot(sc_pdsi, index = "PHDI") # plot PHDI
+#' plot(sc_pdsi, index = "WPLM") # plot weighted PDSI
 #'
 #' # Without self-calibrating.
 #' ori_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
@@ -181,7 +185,7 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
                 getOption("PDSI.p"),
                 getOption("PDSI.q"))
 
-  names(res) <- c("inter.vars", "clim.coes", "calib.coes")
+  #names(res) <- c("inter.vars", "clim.coes", "calib.coes")
 
   inter.vars <- res[[1]]
   clim.coes <- res[[2]]
@@ -190,6 +194,8 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
 
   out <- list(call = match.call(expand.dots=FALSE),
               X = ts(inter.vars[, 14], start = start, frequency = freq),
+              PHDI = ts(inter.vars[, 15], start = start, frequency = freq),
+              WPLM = ts(inter.vars[, 16], start = start, frequency = freq),
               inter.vars = ts(inter.vars[, 3:13], start = start, frequency = freq))
 
   colnames(out$inter.vars) <- c("P", "PE", "PR", "PRO", "PL", "d", "Z",
@@ -219,6 +225,8 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
 #'
 #' @param x an object of class \code{pdsi}.
 #' @param tit title of the plot.
+#' @param index determines PDSI, PHDI (Palmer hydrological drought index)
+#' or WPLM (weighted PDSI) to be plotted. Default "PDSI".
 #' @param ... additional parameters, not used at present.
 #'
 #' @details  Plot the timeseries of (sc)PDSI using function\code{\link{pdsi}}.
@@ -230,10 +238,18 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
 #' \code{\link{pdsi}}
 #'
 #' @export
-plot.pdsi <- function(x, tit = NULL, ...) {
+plot.pdsi <- function(x, tit = NULL, index = "PDSI", ...) {
   # Codes are referenced from the plot function of SPEI by Begueria et al.,
   # see package `SPEI`.
-  ser <- x$X
+  if(index == "PDSI")
+    ser <- x$X
+  if(index == "PHDI")
+    ser <- x$PHDI
+  if(index == "WPLM")
+    ser <- x$WPLM
+  if(!(index %in% c("PDSI", "PHDI", "WPLM")))
+    stop("\"index\" must be \"PDSI\", \"PHDI\", or \"WPLM\".")
+
   sup <- ifelse(ser > 6, 6, NA)
   sdn <- ifelse(ser < -6, -6, NA)
 
@@ -259,7 +275,10 @@ plot.pdsi <- function(x, tit = NULL, ...) {
   ser2 <- ts(c(0, ser, 0),frequency=frequency(ser), start=ns,end=ne)
   ser2.p <- ifelse(ser2 > 0, ser2, 0)
   ser2.n <- ifelse(ser2 <= 0, ser2, 0)
-  plot(ser2, type='n', xlab='', ylab=paste(label, "(X-values)"), main=tit)
+  ylab <- ifelse(index == "PDSI", paste(label, "(X-values)"),
+                 paste(label, sprintf("(%s-values)", index)))
+
+  plot(ser2, type='n', xlab='', ylab=ylab, main=tit)
   if (!all(x$range == x$range.ref)) {
     k <- ts(8, start = c(x$range.ref[1],1), end = c(x$range.ref[2], 12), frequency=12)
     k[1] <- k[length(k)] <- -8

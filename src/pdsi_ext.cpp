@@ -74,7 +74,7 @@ void pdsi::Rext_init(NumericVector& P, NumericVector& PE,
   PE_vec = PE;
   //d_vec = NumericVector(nPeriods);
   //Z_vec = NumericVector(nPeriods);
-  vals_mat = NumericMatrix(nPeriods, 14);
+  vals_mat = NumericMatrix(nPeriods, 16);
   coefs_mat = NumericMatrix(12, 5);
   K_w = 1.;
   K_d = 1.;
@@ -307,12 +307,48 @@ void pdsi::Rext_PDSI_mon(bool sc) {
 
 void pdsi::Rext_output_X() {
   int n = 0;
-  number x;
-  llist tempX;
+  number x, x1, x2, x3, p, wp, ph;
+  llist tempX, tempX1, tempX2, tempX3, tempP;
   copy(tempX, Xlist);
+  copy(tempX1, XL1);
+  copy(tempX2, XL2);
+  copy(tempX3, XL3);
+  copy(tempP, ProbL);
+
   while(!tempX.is_empty() && n < vals_mat.nrow()) {
     x = tempX.tail_remove();
+    x1 = tempX1.tail_remove();
+    x2 = tempX2.tail_remove();
+    x3 = tempX3.tail_remove();
+    p = tempP.tail_remove()/100.;
+
+    ph = x3;
+    if (x3==0) {
+      // There is not an established wet or dry spell so PHDI = PDSI (ph=x)
+      // and the WPLM value is the maximum absolute value of X1 or X2
+      ph = x;
+      wp = x1;
+      if (-x2 > (x1 + tolerance))
+        wp=x2;
+    }
+    else if (p > (0+tolerance/100) && p < (1-tolerance/100)) {
+      // There is an established spell but there is a possibility it has or is
+      // ending.  The WPLM is then a weighted average between X3 and X1 or X2
+      if (x3 < 0)
+        // X3 is negative so WPLM is weighted average of X3 and X1
+        wp = (1-p)*x3 + p*x1;
+      else
+        // X3 is positive so WPLM is weighted average of X3 and X2
+        wp = (1-p)*x3 + p*x2;
+    }
+    else
+      // There is an established spell without possibility of end meaning the
+      // WPLM is simply X3
+      wp=x3;
+
     vals_mat(n, 13) = x;
+    vals_mat(n, 14) = ph;
+    vals_mat(n, 15) = wp;
     n++;
   }
 }

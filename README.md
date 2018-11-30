@@ -23,7 +23,6 @@ library(devtools)
 install_github('Sibada', 'scPDSI')
 ```
 
-
 Please cite these references if you use the scPDSI on your work:
 
 * Palmer W., 1965. Meteorological drought. *U.s.department of Commerce Weather Bureau Research Paper*, <<https://www.ncdc.noaa.gov/temp-and-precip/drought/docs/palmer.pdf>>.
@@ -37,7 +36,10 @@ This is an example showing how to calculate the scPDSI:
 ``` r
 ## P and PE are the vectors of monthly precipitation and PE data.
 sc_pdsi <- pdsi(P, PE, start = 1960, sc = TRUE)
-plot(sc_pdsi$X) # Plot the calculated PDSI values
+
+plot(sc_pdsi)                 # Plot the calculated PDSI (X) values
+plot(sc_pdsi, index = "PHDI") # plot Palmer hydrological drought index
+plot(sc_pdsi, index = "WPLM") # plot weighted PDSI
 ```
 
 ## Copyright and license

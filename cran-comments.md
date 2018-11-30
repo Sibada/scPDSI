@@ -1,3 +1,7 @@
+# scPDSI 0.1.3
+
+* Now the function `pdsi` can also output Palmer hydrological drought index (PHDI) and weighted PDSI (WPLM). We made this improvement according to some users' requirement.
+
 # scPDSI 0.1.2
 
 * Try to fix the bug on compile error on solaris platform again. I feel sorry to mistake the reason for that the `floor` function is also overloaded in `R.h` or `Rcpp.h` therefore I simply commented out the including of `math.h`. The major challenge is that solaris platform is inavailable for us thus we could only do that tentatively.

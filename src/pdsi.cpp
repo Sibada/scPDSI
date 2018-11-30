@@ -3272,7 +3272,7 @@ void pdsi::FinalWrite(char* dir) {
   int cyear=startyear;
   int prev, cur, saved_per, change_per;
   number x, x1, x2, x3, p, wp, ph, z;
-  llist tempX, tempX1, tempX2, tempX3, tempZ, tempP,tempweek;
+  llist tempX, tempX1, tempX2, tempX3, tempZ, tempP, tempweek;
   FILE *pdsi0, *pdsi1, *phdi0, *phdi1, *zind0, *zind1, *wplm0, *wplm1;
   char filename[80];
 
