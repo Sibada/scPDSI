@@ -404,7 +404,7 @@ private:
   // has on the PDSI value.
   void CalcDurFact(number &slope, number &intercept, int sign);
   number get_Z_sum(int length, int sign);
-  void LeastSquares(int *x, number *y, int n, int sign, number &slope, number &intercept);
+  void LeastSquares(int *x, number *y, int n, int sign, int verbose, number &slope, number &intercept);
 
   // This function writes the PDSI values
   void FinalWrite(char* dir);

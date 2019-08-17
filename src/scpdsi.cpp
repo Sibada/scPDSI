@@ -3,10 +3,10 @@
 // Main function to calculate scPDSI.
 // [[Rcpp::export]]
 List C_pdsi(NumericVector P, NumericVector PE, double AWC,
-              int s_yr, int e_yr, int calib_s_yr, int calib_e_yr,
-              bool sc,
-              double K1_1, double K1_2, double K1_3, double K2,
-              double p, double q) {
+            int s_yr, int e_yr, int calib_s_yr, int calib_e_yr,
+            bool sc,
+            double K1_1, double K1_2, double K1_3, double K2,
+            double p, double q) {
 
   pdsi PDSI;
 

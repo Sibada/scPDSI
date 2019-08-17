@@ -10,9 +10,9 @@
 \alias{of}
 \title{Datasets for illustrating the functions in the scPDSI package.}
 \format{\code{Lubuge} dataset:
-\describe{
-  \item{P}{ monthly precipitation totals [mm].}
-  \item{PE}{ monthly potential evapotranspiration totals [mm].}
+\itemize{
+\item \code{P} monthly precipitation totals \code{[mm]}.
+\item \code{PE} monthly potential evapotranspiration totals \code{[mm]}.
 }}
 \source{
 Data of \code{Lubuge} were obtained from the CRU TS v4.01 datasets released by the
@@ -41,4 +41,3 @@ data(Lubuge)
 Data were ported to R by Ruida Zhong.
 }
 \keyword{datasets}
-

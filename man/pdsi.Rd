@@ -8,13 +8,13 @@ pdsi(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL,
   cal_end = NULL, sc = TRUE)
 }
 \arguments{
-\item{P}{Monthly precipitation series without NA [mm]. Can be a time series.}
+\item{P}{Monthly precipitation series without NA \code{[mm]}. Can be a time series.}
 
 \item{PE}{Monthly potential evapotranspiration corresponding to the precipitation
 series. Can be calculated by the Penman-Monteith or the Thonthwate
-equation [mm].}
+equation \code{[mm]}.}
 
-\item{AWC}{Available soil water capacity of the soil layer [mm]. Default 100 mm.}
+\item{AWC}{Available soil water capacity of the soil layer \code{[mm]}. Default 100 mm.}
 
 \item{start}{Integer. Start year of the PDSI to be calculate default 1.}
 
@@ -32,34 +32,37 @@ parameters of Palmer (1965).}
 This function return an object of class \code{pdsi}.
 
 The object of class \code{pdsi} is a list containing the following components:
-
 \itemize{
-  \item call: the call to \code{pdsi} used to generate the object.
-  \item X: time series of the X values, i.e. the Palmer Drought Severity Index (PDSI).
-  \item PHDI: time series of the Palmer hydrological drought index (PHDI).
-  \item WPLM: time series of the weighted PDSI (WPLM).
-  \item inter.vars: An time series matrix containing the intermediate variables,
-  including \code{P} (input precipitation), \code{PE} (input potential
-  evapotranspiration), \code{PR} (potential recharge of soil moisture),
-  \code{PRO} (potential runoff), \code{PL} (potential loss of soil moisture),
-  \code{d} (water deficiencies), \code{Z} (water anomoly index, i.e. Z index),
-  \code{Prob} (probability to end the wet or dry spell), \code{X1}, \code{X2} and
-  \code{X3} (intermediate variables of calculating the X values).
-  \item clim.coes: a matrix of the climate coefficients including \code{alpha},
-  \code{beta}, \code{gamma}, \code{delta}, and \code{K1} coefficient for each month
-  in a year.
-  \item calib.coes: a matrix of the coefficients in the self-calibrating procedure
-  of scPDSI, including \code{m}, \code{b} (slope and intercept of the
-  duration-accumulated Z index plot), \code{p}, \code{q} (duration factors), and
-  \code{K2} (ratio to adjust K coefficient) for wet and dry spell, respectively.
-  Note that the P and PE would be convered from mm to inch in the calculation,
-  therefore the units of \code{m}, \code{b} would also be inch correspondingly.
+\item \code{call}: the call to \code{pdsi} used to generate the object.
+\item \code{X}: time series of the X values, i.e. the Palmer Drought Severity Index (PDSI).
+\item \code{PHDI}: time series of the Palmer hydrological drought index (PHDI).
+\item \code{WPLM}: time series of the weighted PDSI (WPLM).
+\item \code{inter.vars}: An time series matrix containing the intermediate variables,
+including \code{P} (input precipitation), \code{PE} (input potential
+evapotranspiration), \code{PR} (potential recharge of soil moisture),
+\code{PRO} (potential runoff), \code{PL} (potential loss of soil moisture),
+\code{d} (water deficiencies), \code{Z} (water anomoly index, i.e. Z index),
+\code{Prob} (probability to end the wet or dry spell), \code{X1}, \code{X2} and
+\code{X3} (intermediate variables of calculating the X values).
+\item clim.coes: a matrix of the climate coefficients including \code{alpha},
+\code{beta}, \code{gamma}, \code{delta}, and \code{K1} coefficient for each month
+in a year.
+\item \code{calib.coes}: a matrix of the coefficients in the self-calibrating procedure
+of scPDSI, including \code{m}, \code{b} (slope and intercept of the
+duration-accumulated Z index plot), \code{p}, \code{q} (duration factors), and
+\code{K2} (ratio to adjust K coefficient) for wet and dry spell, respectively.
+\item \code{calib.coes}: a matrix of the coefficients in the self-calibrating procedure
+of scPDSI, including \code{m}, \code{b} (slope and intercept of the
+duration-accumulated Z index plot), \code{p}, \code{q} (duration factors), and
+\code{K2} (ratio to adjust K coefficient) for wet and dry spell, respectively.
+Note that the P and PE would be convered from mm to inch in the calculation,
+therefore the units of \code{m}, \code{b} would also be inch correspondingly.
 }
 }
 \description{
 Calculating the monthly conventional Palmer Drought Severity Index
-             (PDSI) and Self-calibrating PDSI (scPDSI) using the precipitation
-             and potential evapotranspiration.
+(PDSI) and Self-calibrating PDSI (scPDSI) using the precipitation
+and potential evapotranspiration.
 }
 \details{
 The Palmer Drought Severity Index (PDSI), proposed by Palmer (1965), is a
@@ -129,20 +132,19 @@ plot(ori_pdsi)
 
 # Without self-calibrating and use standards of
 # mainland China. (GB/T 20481-2017)
-options(PDSI.coe.K1.1 = 1.6)
-options(PDSI.coe.K1.3 = 0.4)
-options(PDSI.coe.K2 = 16.84)
-options(PDSI.p = 0.755)
-options(PDSI.q = 1/1.63)
+options(
+   PDSI.coe.K1.1 = 1.6,
+   PDSI.coe.K1.3 = 0.4,
+   PDSI.coe.K2   = 16.84,
+   PDSI.p        = 0.755,
+   PDSI.q        = 1/1.63)
 gb_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
 plot(gb_pdsi)
 
 }
 \references{
 Palmer W., 1965. Meteorological drought. U.s.department of Commerce
-            Weather Bureau Research Paper.
-
-            Wells, N., Goddard, S., Hayes, M. J., 2004. A Self-Calibrating Palmer
-            Drought Severity Index. Journal of Climate, 17(12):2335-2351.
+Weather Bureau Research Paper.\preformatted{        Wells, N., Goddard, S., Hayes, M. J., 2004. A Self-Calibrating Palmer
+        Drought Severity Index. Journal of Climate, 17(12):2335-2351.
 }
-
+}

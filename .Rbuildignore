@@ -3,3 +3,4 @@
 LICENSE
 ^\.travis\.yml$
 ^cran-comments\.md$
+^inst$

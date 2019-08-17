@@ -20,10 +20,9 @@ or WPLM (weighted PDSI) to be plotted. Default "PDSI".}
 plot the timeseries of calculated (sc)PDSI.
 }
 \details{
-Plot the timeseries of (sc)PDSI using function\code{\link{pdsi}}.
+Plot the timeseries of (sc)PDSI using function\code{\link[=pdsi]{pdsi()}}.
 Values over 6 or below -6 and NA values would be shown by grey points.
 }
 \seealso{
-\code{\link{pdsi}}
+\code{\link[=pdsi]{pdsi()}}
 }
-

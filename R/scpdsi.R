@@ -32,13 +32,13 @@ NULL
 #'              (PDSI) and Self-calibrating PDSI (scPDSI) using the precipitation
 #'              and potential evapotranspiration.
 #'
-#' @param P Monthly precipitation series without NA [mm]. Can be a time series.
+#' @param P Monthly precipitation series without NA `[mm]`. Can be a time series.
 #'
 #' @param PE Monthly potential evapotranspiration corresponding to the precipitation
 #'            series. Can be calculated by the Penman-Monteith or the Thonthwate
-#'            equation [mm].
+#'            equation `[mm]`.
 #'
-#' @param AWC Available soil water capacity of the soil layer [mm]. Default 100 mm.
+#' @param AWC Available soil water capacity of the soil layer `[mm]`. Default 100 mm.
 #'
 #' @param start Integer. Start year of the PDSI to be calculate default 1.
 #'
@@ -87,8 +87,8 @@ NULL
 #' \deqn{X[i]=p*X[i-1]+q*Z[i]}
 #'
 #' \eqn{coeK11}, \eqn{coeK12}, \eqn{coeK13}, \eqn{coeK2}, \eqn{p}, and \eqn{q} are
-#' corresponding to \code{PDSI.coe.K1.1}, \code{PDSI.coe.K1.2}, \code{PDSI.coe.K1.3},
-#' \code{PDSI.coe.K2}, \code{PDSI.p}, and \code{PDSI.q}, respectively.
+#' corresponding to `PDSI.coe.K1.1`, `PDSI.coe.K1.2`, `PDSI.coe.K1.3`,
+#' `PDSI.coe.K2`, `PDSI.p`, and `PDSI.q`, respectively.
 #'
 #' For example, in a national standard in China about meteorological drought level
 #' (GB/T 20481-2017), the PDSI was revised by re-adjust the constants in the
@@ -104,33 +104,35 @@ NULL
 #' }
 #'
 #' @return
-#' This function return an object of class \code{pdsi}.
+#' This function return an object of class `pdsi`.
 #'
-#' The object of class \code{pdsi} is a list containing the following components:
+#' The object of class `pdsi` is a list containing the following components:
 #'
-#' \itemize{
-#'   \item call: the call to \code{pdsi} used to generate the object.
-#'   \item X: time series of the X values, i.e. the Palmer Drought Severity Index (PDSI).
-#'   \item PHDI: time series of the Palmer hydrological drought index (PHDI).
-#'   \item WPLM: time series of the weighted PDSI (WPLM).
-#'   \item inter.vars: An time series matrix containing the intermediate variables,
-#'   including \code{P} (input precipitation), \code{PE} (input potential
-#'   evapotranspiration), \code{PR} (potential recharge of soil moisture),
-#'   \code{PRO} (potential runoff), \code{PL} (potential loss of soil moisture),
-#'   \code{d} (water deficiencies), \code{Z} (water anomoly index, i.e. Z index),
-#'   \code{Prob} (probability to end the wet or dry spell), \code{X1}, \code{X2} and
-#'   \code{X3} (intermediate variables of calculating the X values).
-#'   \item clim.coes: a matrix of the climate coefficients including \code{alpha},
-#'   \code{beta}, \code{gamma}, \code{delta}, and \code{K1} coefficient for each month
+#' * `call`: the call to `pdsi` used to generate the object.
+#' * `X`: time series of the X values, i.e. the Palmer Drought Severity Index (PDSI).
+#' * `PHDI`: time series of the Palmer hydrological drought index (PHDI).
+#' * `WPLM`: time series of the weighted PDSI (WPLM).
+#' * `inter.vars`: An time series matrix containing the intermediate variables,
+#'   including `P` (input precipitation), `PE` (input potential
+#'   evapotranspiration), `PR` (potential recharge of soil moisture),
+#'   `PRO` (potential runoff), `PL` (potential loss of soil moisture),
+#'   `d` (water deficiencies), `Z` (water anomoly index, i.e. Z index),
+#'   `Prob` (probability to end the wet or dry spell), `X1`, `X2` and
+#'   `X3` (intermediate variables of calculating the X values).
+#'   \item clim.coes: a matrix of the climate coefficients including `alpha`,
+#'   `beta`, `gamma`, `delta`, and `K1` coefficient for each month
 #'   in a year.
-#'   \item calib.coes: a matrix of the coefficients in the self-calibrating procedure
-#'   of scPDSI, including \code{m}, \code{b} (slope and intercept of the
-#'   duration-accumulated Z index plot), \code{p}, \code{q} (duration factors), and
-#'   \code{K2} (ratio to adjust K coefficient) for wet and dry spell, respectively.
+#' * `calib.coes`: a matrix of the coefficients in the self-calibrating procedure
+#'   of scPDSI, including `m`, `b` (slope and intercept of the
+#'   duration-accumulated Z index plot), `p`, `q` (duration factors), and
+#'   `K2` (ratio to adjust K coefficient) for wet and dry spell, respectively.
+#' * `calib.coes`: a matrix of the coefficients in the self-calibrating procedure
+#'   of scPDSI, including `m`, `b` (slope and intercept of the
+#'   duration-accumulated Z index plot), `p`, `q` (duration factors), and
+#'   `K2` (ratio to adjust K coefficient) for wet and dry spell, respectively.
 #'   Note that the P and PE would be convered from mm to inch in the calculation,
-#'   therefore the units of \code{m}, \code{b} would also be inch correspondingly.
-#' }
-#'
+#'   therefore the units of `m`, `b` would also be inch correspondingly.
+#' 
 #' @references Palmer W., 1965. Meteorological drought. U.s.department of Commerce
 #'             Weather Bureau Research Paper.
 #'
@@ -155,19 +157,21 @@ NULL
 #'
 #' # Without self-calibrating and use standards of
 #' # mainland China. (GB/T 20481-2017)
-#' options(PDSI.coe.K1.1 = 1.6)
-#' options(PDSI.coe.K1.3 = 0.4)
-#' options(PDSI.coe.K2 = 16.84)
-#' options(PDSI.p = 0.755)
-#' options(PDSI.q = 1/1.63)
+#' options(
+#'    PDSI.coe.K1.1 = 1.6,
+#'    PDSI.coe.K1.3 = 0.4,
+#'    PDSI.coe.K2   = 16.84,
+#'    PDSI.p        = 0.755,
+#'    PDSI.q        = 1/1.63)
 #' gb_pdsi <- pdsi(P, PE, start = 1960, sc = FALSE)
 #' plot(gb_pdsi)
 #'
 #' @importFrom stats ts
 #'
 #' @export
-pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, cal_end = NULL,
-                 sc = TRUE) {
+pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, 
+    cal_start = NULL, cal_end = NULL,
+    sc = TRUE) {
 
   freq <- 12
 
@@ -223,19 +227,19 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL, c
 #'
 #' @description plot the timeseries of calculated (sc)PDSI.
 #'
-#' @param x an object of class \code{pdsi}.
+#' @param x an object of class `pdsi`.
 #' @param tit title of the plot.
 #' @param index determines PDSI, PHDI (Palmer hydrological drought index)
 #' or WPLM (weighted PDSI) to be plotted. Default "PDSI".
 #' @param ... additional parameters, not used at present.
 #'
-#' @details  Plot the timeseries of (sc)PDSI using function\code{\link{pdsi}}.
+#' @details  Plot the timeseries of (sc)PDSI using function[pdsi()].
 #' Values over 6 or below -6 and NA values would be shown by grey points.
 #'
 #' @importFrom graphics plot polygon abline lines points
 #' @importFrom stats start end ts frequency
 #' @seealso
-#' \code{\link{pdsi}}
+#' [pdsi()]
 #'
 #' @export
 plot.pdsi <- function(x, tit = NULL, index = "PDSI", ...) {
