@@ -6,8 +6,8 @@
 using namespace Rcpp;
 
 // C_pdsi
-List C_pdsi(NumericVector P, NumericVector PE, double AWC, int s_yr, int e_yr, int calib_s_yr, int calib_e_yr, bool sc, double K1_1, double K1_2, double K1_3, double K2, double p, double q);
-RcppExport SEXP _scPDSI_C_pdsi(SEXP PSEXP, SEXP PESEXP, SEXP AWCSEXP, SEXP s_yrSEXP, SEXP e_yrSEXP, SEXP calib_s_yrSEXP, SEXP calib_e_yrSEXP, SEXP scSEXP, SEXP K1_1SEXP, SEXP K1_2SEXP, SEXP K1_3SEXP, SEXP K2SEXP, SEXP pSEXP, SEXP qSEXP) {
+List C_pdsi(NumericVector P, NumericVector PE, double AWC, int s_yr, int e_yr, int calib_s_yr, int calib_e_yr, bool sc, int num_of_periods, double K1_1, double K1_2, double K1_3, double K2, double p, double q);
+RcppExport SEXP _scPDSI_C_pdsi(SEXP PSEXP, SEXP PESEXP, SEXP AWCSEXP, SEXP s_yrSEXP, SEXP e_yrSEXP, SEXP calib_s_yrSEXP, SEXP calib_e_yrSEXP, SEXP scSEXP, SEXP num_of_periodsSEXP, SEXP K1_1SEXP, SEXP K1_2SEXP, SEXP K1_3SEXP, SEXP K2SEXP, SEXP pSEXP, SEXP qSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -19,19 +19,20 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type calib_s_yr(calib_s_yrSEXP);
     Rcpp::traits::input_parameter< int >::type calib_e_yr(calib_e_yrSEXP);
     Rcpp::traits::input_parameter< bool >::type sc(scSEXP);
+    Rcpp::traits::input_parameter< int >::type num_of_periods(num_of_periodsSEXP);
     Rcpp::traits::input_parameter< double >::type K1_1(K1_1SEXP);
     Rcpp::traits::input_parameter< double >::type K1_2(K1_2SEXP);
     Rcpp::traits::input_parameter< double >::type K1_3(K1_3SEXP);
     Rcpp::traits::input_parameter< double >::type K2(K2SEXP);
     Rcpp::traits::input_parameter< double >::type p(pSEXP);
     Rcpp::traits::input_parameter< double >::type q(qSEXP);
-    rcpp_result_gen = Rcpp::wrap(C_pdsi(P, PE, AWC, s_yr, e_yr, calib_s_yr, calib_e_yr, sc, K1_1, K1_2, K1_3, K2, p, q));
+    rcpp_result_gen = Rcpp::wrap(C_pdsi(P, PE, AWC, s_yr, e_yr, calib_s_yr, calib_e_yr, sc, num_of_periods, K1_1, K1_2, K1_3, K2, p, q));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_scPDSI_C_pdsi", (DL_FUNC) &_scPDSI_C_pdsi, 14},
+    {"_scPDSI_C_pdsi", (DL_FUNC) &_scPDSI_C_pdsi, 15},
     {NULL, NULL, 0}
 };
 

@@ -173,7 +173,7 @@ public:
   void Rext_init(NumericVector& P, NumericVector& PE,
   	             number AWC,
                  int s_yr, int e_yr,
-                 int calib_s_yr, int calib_e_yr);
+                 int calib_s_yr, int calib_e_yr, int num_of_periods);
   void Rext_set_parcoefs(number K1_1, number K1_2, number K1_3, number K2,
   	number p, number q);
 

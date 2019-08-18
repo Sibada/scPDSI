@@ -1,19 +1,17 @@
-#' Read the input data of scPDSI v2003 to R
+#' Read the input data of v2003 scPDSI to R
 #'
-#' @param file Character, input file path
+#' @param file Character, input file path.
 #'
 #' @keywords internal
 #'
 #' @import magrittr
-#' @importFrom zoo zoo
-#' @importFrom lubridate make_date
+#' @importFrom utils read.table
 #' @export
 read_pdsi_input <- function(file){
     d <- read.table(file)
     tidy_pdsi_df(d)
 }
 
-#' @export
 tidy_pdsi_df <- function(d, missing = -99){
     m <- ncol(d)
     n <- nrow(d)
@@ -54,6 +52,13 @@ split_files <- function(files){
         week = files[c(I_p, I_week)])
 }
 
+#' Read the output data of v2003 scPDSI to R
+#' 
+#' @param outdir Directory of output data.
+#' @param scale Character, `monthly` or `weekly`.
+#' 
+#' @keywords internal
+#' 
 #' @importFrom purrr is_empty map
 #' @importFrom data.table fread
 #' @export

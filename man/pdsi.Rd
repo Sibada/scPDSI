@@ -5,7 +5,7 @@
 \title{Calculate the (sc)PDSI}
 \usage{
 pdsi(P, PE, AWC = 100, start = NULL, end = NULL, cal_start = NULL,
-  cal_end = NULL, sc = TRUE)
+  cal_end = NULL, sc = TRUE, num_of_periods = 12)
 }
 \arguments{
 \item{P}{Monthly precipitation series without NA \code{[mm]}. Can be a time series.}
@@ -27,6 +27,8 @@ equation \code{[mm]}.}
 \item{sc}{Bool. Should use the self-calibrating procedure to calculate the climatical
 coefficient (K2 and duration coefficients). If not it would use the default
 parameters of Palmer (1965).}
+
+\item{num_of_periods}{Integer. 12 (for monthly) and 52 (for weekly).}
 }
 \value{
 This function return an object of class \code{pdsi}.

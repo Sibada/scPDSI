@@ -3,12 +3,14 @@
 void pdsi::Rext_init(NumericVector& P, NumericVector& PE,
                      number o_AWC,
                      int s_yr, int e_yr,
-                     int calib_s_yr, int calib_e_yr) {
+                     int calib_s_yr, int calib_e_yr, int NUM_OF_PERIODS) {
   int nPeriods;
   int input_len = P.length();
   metric = 1;
   verbose = 0;
-  num_of_periods = 12;
+
+  num_of_periods = NUM_OF_PERIODS;
+  Weekly = num_of_periods == 52;
 
   if(s_yr >= e_yr)
     Rf_error("Start year (%d) must earlier than end year (%d).", s_yr, e_yr);
@@ -70,12 +72,12 @@ void pdsi::Rext_init(NumericVector& P, NumericVector& PE,
   if(Su < 0)
     Su = 0;
 
-  P_vec = P;
+  P_vec  = P;
   PE_vec = PE;
   //d_vec = NumericVector(nPeriods);
   //Z_vec = NumericVector(nPeriods);
   vals_mat = NumericMatrix(nPeriods, 16);
-  coefs_mat = NumericMatrix(12, 5);
+  coefs_mat = NumericMatrix(num_of_periods, 5);
   K_w = 1.;
   K_d = 1.;
 
@@ -106,7 +108,7 @@ void pdsi::Rext_set_parcoefs(number K1_1, number K1_2, number K1_3, number K2,
 }
 
 void pdsi::Rext_get_Rvec(NumericVector R_vec, int year, number* A, int freq) {
-  int rng = min(freq, R_vec.length() - (year - 1) * freq);
+  int rng = min(freq, R_vec.length() - (year - 1) * freq); // time_range
   for(int i = 0; i < freq; i++) {
     if(i < rng)
       A[i] = R_vec[(year - 1) * freq + i];
@@ -117,7 +119,6 @@ void pdsi::Rext_get_Rvec(NumericVector R_vec, int year, number* A, int freq) {
         A[i] = A[i]/25.4;
     }
   }
-
 }
 
 void pdsi::Rext_PDSI_mon(bool sc) {
@@ -125,10 +126,9 @@ void pdsi::Rext_PDSI_mon(bool sc) {
   //FILE *param;
   //char filename[170];
 
-  SCMonthly = true;
-  Monthly = false;
-  Weekly = false;
-
+  // SCMonthly = true;
+  // Monthly = false;
+  
   /*
   if(initialize() < 1){
     if(verbose > 0)
@@ -143,7 +143,7 @@ void pdsi::Rext_PDSI_mon(bool sc) {
   }
   */
   period_length = 1;
-  num_of_periods = 12;
+  // num_of_periods = 12;
 
   /* num_of_periods is set in pdsi constructor and reset in here with the number of periods in a year */
   currentCalibrationStartYear = calibrationStartYear;
@@ -180,22 +180,6 @@ void pdsi::Rext_PDSI_mon(bool sc) {
   // This block opens the parameter file and sets the initial Su and TLA values
   // must be called after the variable period_length is determined in the
   // set_flags function
-
-  /*
-  if(strlen(input_dir)>1)
-    strcpy(filename,input_dir);
-  else
-    strcpy(filename,"./");
-  strcat(filename,"parameter");
-  if((param=fopen(filename,"r"))==NULL) {
-    printf("Unable to open parameter file.\n");
-    printf("File name: %s\n",filename);
-    exit(1);
-  }
-  GetParam(param);
-  fclose(param);
-   */
-
   // Output seen only in maximum verbose mode
   /*
   if(verbose>1)
@@ -204,26 +188,11 @@ void pdsi::Rext_PDSI_mon(bool sc) {
   // SumAll is called to compute the sums for the 8 water balance variables
   SumAll();
   // This outputs those sums to the screen
-  /*
-  //if(verbose>1) {
-    printf ("STATION = %5d %18c SUMMATION OF MONTHLY VALUES OVER %4d YEARS\n", 0, ' ', totalyears);
-    printf ("%36c CALIBRATION YEARS:\n", ' ');
-    printf ("%4s %7s %8s %8s %8s %8s %8s %8s %8s %8s %10s", "PER", "P", "S", "PR", "PE", "PL", "ET", "R", "L", "RO", "DEP\n\n");
-  //}
-  */
   for (i = 0;i < num_of_periods;i++) {
     /* DEPSum will only include calibration interval data since the ET, R, PE, and RO
     ** sum variables only include data from the calibration interval.
     */
     DEPSum[i] = ETSum[i] + RSum[i] - PESum[i] + ROSum[i];
-    /*
-    //if(verbose>1) {
-      printf ("%4d", (period_length*i)+1);
-      printf ("%9.2f %8.2f %8.2f %8.2f %8.2f", PSum[i], PROSum[i], PRSum[i], PESum[i], PLSum[i]);
-      printf ("%9.2f %8.2f %8.2f %8.2f %8.2f", ETSum[i], RSum[i], LSum[i], ROSum[i], DEPSum[i]);
-      printf ("\n");
-    //}
-    */
     DSSqr[i] = 0;
   }
 
@@ -266,41 +235,15 @@ void pdsi::Rext_PDSI_mon(bool sc) {
     CalcX();
     //Calibrate the Index
     for(int i = 0; i < 3; i++)
-      Calibrate();
+      Calibrate(); // Genius Ruida! If you need to keep same as version 2003, comment this.
     // Now that all calculations have been done they can be output to the screen
     /* SG 6/5/06: changed totalyears to nCalibrationYears means to support
      **            user defined calibration intervals. When not used
      **            nCalibrationYears==totalyears; hence no change then
      */
-
   } else {
     CalcOrigK();
   }
-  /*
-  if(verbose>1) {
-    int i;
-    printf ("STATION = %5d %24c PARAMETERS AND MEANS OF MONTHLY VALUE FOR %d YEARS\n\n", 0, ' ', nCalibrationYears); // SG 6/5/06: May want to clarify this is number Calibration Years when so specified
-    printf ("%4s %8s %8s %8s %8s %8s %8s %7s %8s", "PER", "ALPHA", "BETA", "GAMMA", "DELTA", "Wet K", "Dry K", "P", "S");
-    printf ("%9s %8s %8s %8s %8s %8s %8s\n\n", "PR", "PE", "PL", "ET", "R", "L", "RO");
-    for (i=0;i<num_of_periods;i++) {
-      printf ("%4d %8.4f %8.4f %8.4f %8.4f", (period_length*i)+1, Alpha[i], Beta[i], Gamma[i], Delta[i]);
-      printf ("%9.3f %8.3f %8.2f %8.2f %8.2f", k[i]*wet_ratio, k[i]*dry_ratio, PSum[i]/nCalibrationYears, PROSum[i]/nCalibrationYears, PRSum[i]/nCalibrationYears);
-      printf ("%9.2f %8.2f %8.2f %8.2f", PESum[i]/nCalibrationYears, PLSum[i]/nCalibrationYears, ETSum[i]/nCalibrationYears, RSum[i]/nCalibrationYears);
-      printf ("%9.2f %8.2f\n", LSum[i]/nCalibrationYears, ROSum[i]/nCalibrationYears);
-    }
-    printf ("\n\n\n%4s %8s %8s %8s %8s %8s\n\n", "PER", "D-ABS", "SIG-D", "DEP", "S-DEP", "SIG-S");
-    for (i=0;i<num_of_periods;i++) {
-      printf ("%4d %8.3f %8.2f %8.2f ", (period_length*i)+1, D[i], sqrt(DSSqr[i]/(nCalibrationYears-1)), DEPSum[i]/nCalibrationYears);
-      if (i==7) {
-        number E, DE;
-        E=SD/nCalibrationYears;
-        DE=sqrt((SD2-E*SD)/(nCalibrationYears-1));
-        printf ("%8.2f %8.2f", E, DE);
-      }
-      printf ("\n");
-    }
-  }
-*/
   Rext_output_X();
 }
 

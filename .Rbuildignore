@@ -4,3 +4,4 @@ LICENSE
 ^\.travis\.yml$
 ^cran-comments\.md$
 ^inst$
+^src/README\.md$

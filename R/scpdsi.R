@@ -6,6 +6,10 @@
 NULL
 
 .onLoad <- function(libname, pkgname) {
+  if(getRversion() >= "2.15.1") {
+    utils::globalVariables(c("."))
+  }
+
   ops <- options()
   pdsi.ops <- list(
     # Calculating the conventional PDSI
@@ -51,7 +55,8 @@ NULL
 #' @param sc Bool. Should use the self-calibrating procedure to calculate the climatical
 #'           coefficient (K2 and duration coefficients). If not it would use the default
 #'           parameters of Palmer (1965).
-#'
+#' @param num_of_periods Integer. 12 (for monthly) and 52 (for weekly).
+#' 
 #' @details
 #'
 #' The Palmer Drought Severity Index (PDSI), proposed by Palmer (1965), is a
@@ -132,7 +137,7 @@ NULL
 #'   `K2` (ratio to adjust K coefficient) for wet and dry spell, respectively.
 #'   Note that the P and PE would be convered from mm to inch in the calculation,
 #'   therefore the units of `m`, `b` would also be inch correspondingly.
-#' 
+#'
 #' @references Palmer W., 1965. Meteorological drought. U.s.department of Commerce
 #'             Weather Bureau Research Paper.
 #'
@@ -169,11 +174,10 @@ NULL
 #' @importFrom stats ts
 #'
 #' @export
-pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL, 
-    cal_start = NULL, cal_end = NULL,
-    sc = TRUE) {
+pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL,
+    cal_start = NULL, cal_end = NULL, sc = TRUE, num_of_periods = 12) {
 
-  freq <- 12
+  freq <- num_of_periods
 
   if(is.null(start)) start <-  1;
   if(is.null(end)) end <- start + ceiling(length(P)/freq) - 1
@@ -181,7 +185,7 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL,
   if(is.null(cal_start)) cal_start <- start
   if(is.null(cal_end)) cal_end <- end
 
-  res <- C_pdsi(P, PE, AWC, start, end, cal_start, cal_end, sc,
+  res <- C_pdsi(P, PE, AWC, start, end, cal_start, cal_end, sc, num_of_periods,
                 getOption("PDSI.coe.K1.1"),
                 getOption("PDSI.coe.K1.2"),
                 getOption("PDSI.coe.K1.3"),
@@ -210,7 +214,7 @@ pdsi <- function(P, PE, AWC = 100, start = NULL, end = NULL,
   rownames(calib.coes) <- c('wet', 'dry')
 
   colnames(clim.coes) <- c("alpha", "beta", "gamma", "delta", "K1")
-  rownames(clim.coes) <- month.name
+  rownames(clim.coes) <- sprintf("t%02d", 1:num_of_periods) #month.name
 
   out$clim.coes <- clim.coes
   out$calib.coes <- calib.coes

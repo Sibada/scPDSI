@@ -54,15 +54,15 @@ void pdsi::Calcd() {
     // This reads in the values previously stored in "potentials"
     //while(fscanf(fin,"%d %d %f %f %f %f %f %f", &yr, &per, &scn1, &scn2, &scn3, &scn4, &scn5, &scn6) != EOF) {
     for (i = 0; i < vals_mat.nrow(); i++) {
-        yr = vals_mat(i, 0);
+        yr  = vals_mat(i, 0);
         per = vals_mat(i, 1);
         per = (per - 1) / period_length; //adjust the period # for use in arrays.
 
-        p = vals_mat(i, 2);
-        PE = vals_mat(i, 3);
-        PR = vals_mat(i, 4);
+        p   = vals_mat(i, 2);
+        PE  = vals_mat(i, 3);
+        PR  = vals_mat(i, 4);
         PRO = vals_mat(i, 5);
-        PL = vals_mat(i, 6);
+        PL  = vals_mat(i, 6);
         //scn6 is P - PE, which can be ignored for calculations.
 
         if (p != MISSING && PE != MISSING && PR != MISSING && PRO != MISSING && PL != MISSING) {
@@ -451,8 +451,7 @@ void pdsi::SumAll() {
             // NOTE: Here T is the vector of PE, instead of tempreature.
             Rext_get_Rvec(PE_vec, year, T, 52);
             Rext_get_Rvec(P_vec, year, P, 52);
-        }
-        else {
+        } else {
             Rext_get_Rvec(PE_vec, year, T, 12);
             Rext_get_Rvec(P_vec, year, P, 12);
         }
@@ -486,8 +485,7 @@ void pdsi::SumAll() {
                             DEP = 0;
                         }
                     }
-                }
-                else {
+                } else {
                     if (per > 4 && per < 8) {
                         DEP = DEP + P[per] + L - PE;
                         if (per == 7) {
@@ -509,15 +507,15 @@ void pdsi::SumAll() {
                         nCalibrationPeriodsLeft--;
 
                         // Update the sums by adding the current water balance values
-                        ETSum[per] += ET;
-                        RSum[per] += R;
-                        ROSum[per] += RO;
-                        LSum[per] += L;
-                        PSum[per] += P[per];
-                        PESum[per] += PE;
-                        PRSum[per] += PR;
+                        ETSum[per]  += ET;
+                        RSum[per]   += R;
+                        ROSum[per]  += RO;
+                        LSum[per]   += L;
+                        PSum[per]   += P[per];
+                        PESum[per]  += PE;
+                        PRSum[per]  += PR;
                         PROSum[per] += PRO;
-                        PLSum[per] += PL;
+                        PLSum[per]  += PL;
                     }
                 }
 

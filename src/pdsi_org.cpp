@@ -182,8 +182,7 @@ void pdsi::CalcActual(int per) {
             under_L = 0.0;
             new_Ss = Ss - surface_L;
             new_Su = Su;
-        }
-        else {
+        } else {
             // The top layer is drained, so the underlying layer loses moisture also.
             surface_L = Ss;
             under_L = (PE - P[per] - surface_L) * Su / AWC;
@@ -279,7 +278,6 @@ void pdsi::Calibrate() {
         tempZ.insert(Z);
     }
     copy(ZIND, tempZ);
-
     CalcX();
 }//end of calibrate()
 
@@ -309,8 +307,7 @@ void pdsi::ChooseX(number& newX, number& newX1, number& newX2, number& newX3, in
     if (X3 >= 0) {
         m = wetm;
         b = wetb;
-    }
-    else {
+    } else {
         m = drym;
         b = dryb;
     }
@@ -334,8 +331,7 @@ void pdsi::ChooseX(number& newX, number& newX1, number& newX2, number& newX3, in
         newX = newX1;
         newX3 = newX1;
         newX1 = 0;
-    }
-    else {
+    } else {
         newX2 = (dryc * X2 + Z / (drym + dryb));
         if (newX2 > 0)
             newX2 = 0;
@@ -345,24 +341,19 @@ void pdsi::ChooseX(number& newX, number& newX1, number& newX2, number& newX3, in
             newX = newX2;
             newX3 = newX2;
             newX2 = 0;
-        }
-        else if (newX3 == 0) {
+        } else if (newX3 == 0) {
             if (newX1 == 0) {
                 Backtrack(newX2, newX1);
                 newX = newX2;
-            }
-            else if (newX2 == 0) {
+            } else if (newX2 == 0) {
                 Backtrack(newX1, newX2);
                 newX = newX1;
-            }
-            else {
+            } else {
                 altX1.insert(newX1);
                 altX2.insert(newX2);
                 newX = newX3;
             }
-        }
-
-        else {
+        } else {
             //store X1 and X2 in their linked lists for possible use later
             altX1.insert(newX1);
             altX2.insert(newX2);
@@ -518,8 +509,7 @@ number pdsi::get_Z_sum(int length, int sign) {
             if (z != MISSING) {
                 sum += z;
                 list_to_sum.insert(z);
-            }
-            else {
+            } else {
                 i--;
             }
         }

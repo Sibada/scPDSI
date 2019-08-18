@@ -1,10 +1,10 @@
 # scPDSI
-[![Travis-CI Build Status](https://travis-ci.org/Sibada/scPDSI.svg?branch=master)](https://travis-ci.org/Sibada/scPDSI)
+[![Travis-CI Build Status](https://travis-ci.org/kongdd/scPDSI.svg?branch=master)](https://travis-ci.org/kongdd/scPDSI)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/scPDSI)](https://cran.r-project.org/package=scPDSI)
 [![CRAN version](http://www.r-pkg.org/badges/version/scPDSI)](https://cran.r-project.org/package=scPDSI)
- * Turn on travis for your repo at https://travis-ci.org/Sibada/scPDSI
+ * Turn on travis for your repo at https://travis-ci.org/kongdd/scPDSI
 
-This R package is used to calculate the conventional **Palmer Drought Severity Index (PDSI)** and the **Self-Calibrating Palmer Drought Severity Index (scPDSI)**, the widely used drought indicators around the world, at monthly scale. Precipitation and potential evapotranspiration (PE) data are required to calculate the PDSI and scPDSI.
+This R package is used to calculate the conventional **Palmer Drought Severity Index (PDSI)** and the **Self-Calibrating Palmer Drought Severity Index (scPDSI)**, the widely used drought indicators around the world, at <u>**monthly and weekly**</u> scale. Precipitation and potential evapotranspiration (PE) data are required to calculate the PDSI and scPDSI.
 
 This package is build up on the C++ codes of the scPDSI provided by Nathan Wells, Steve Goddard and Michael J. Hayes in the University of Nebraska-Lincoln.
 
@@ -19,13 +19,12 @@ install.packages('scPDSI')
 Or install from GitHub (usually the development version):
 
 ```R
-library(devtools)
-install_github('Sibada', 'scPDSI')
+devtools::install_github('kongdd/scPDSI')
 ```
 
 Please cite these references if you use the scPDSI on your work:
 
-* Palmer W., 1965. Meteorological drought. *U.s.department of Commerce Weather Bureau Research Paper*, <<https://www.ncdc.noaa.gov/temp-and-precip/drought/docs/palmer.pdf>>.
+* Palmer W., 1965. Meteorological drought. *U.S.department of Commerce Weather Bureau Research Paper*, <<https://www.ncdc.noaa.gov/temp-and-precip/drought/docs/palmer.pdf>>.
 
 * Wells N., Goddard S., Hayes M. J., 2004. A Self-Calibrating Palmer Drought Severity Index. *Journal of Climate*, **17**(12):2335-2351, <[doi:10.1175/1520-0442(2004)017<2335:ASPDSI>2.0.CO;2](http://dx.doi.org/10.1175/1520-0442(2004)017%3C2335:ASPDSI%3E2.0.CO;2)>.
 
