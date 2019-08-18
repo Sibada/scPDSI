@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "rtools-64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "C:/Program Files/R/R-3.5.3/include",
+                "D:/Documents/OneDrive - mail2.sysu.edu.cn/sync/R-library/3.6/Rcpp/include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:/Rtools/mingw_64/bin/g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

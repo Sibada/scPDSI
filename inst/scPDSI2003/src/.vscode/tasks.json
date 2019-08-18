@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    // "windows": {
+    //     "options": {
+    //         "shell": {
+    //             "executable": "wsl.exe", //修改task执行的shell为WSL
+    //             "args": []
+    //         }
+    //     }
+    // },
+    "tasks": [
+        {
+            "label": "rtools build", //自定义task的名字，在launch.json中会用到
+            "type": "shell", //指下方的command为shell命令
+            "command": "make", //command和args在一块表示了：g++ -std=c++11 -g *.cpp
+            "args": [
+                ""
+                // "-std=c++11", //使用c++11标准编译
+                // "-g", //带调试信息的编译
+                // "*.cpp" //编译所有.cpp文件
+            ],
+            "group": {
+                "kind": "build", //此task分在build组中
+                "isDefault": true
+            }
+        }
+    ]
+}

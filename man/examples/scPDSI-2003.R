@@ -12,7 +12,7 @@ library(lubridate)
 library(zoo)
 library(plyr)
 ## 2004 example
-indir <- system.file("backup/data/example", package = "scPDSI")
+indir <- system.file("scPDSI2003/data/example", package = "scPDSI")
 outdir <- dirname(indir)
 
 files <- dir(indir, full.names = TRUE) %>% set_names(., basename(.))
@@ -20,14 +20,16 @@ lst_files <- split_files(files)
 lst <- map_depth(lst_files, 2, read_pdsi_input)
 
 ## scales
-r <- read_pdsi_ouput(outdir, "monthly") %>% map(tidy_pdsi_df)
+# df <- lst$week$
+r <- read_pdsi_ouput(outdir, "weekly") %>% map(tidy_pdsi_df)
+df <- r$`1/potentials`
 
 {
-    y0_pdsi <- r$`original/PDSI.tbl`
-    y0_scpdsi <- r$`self_cal/PDSI.tbl`
-    y0 <- y0_scpdsi
+    y0_pdsi <- r$`1/PDSI.tbl`
+    # y0_scpdsi <- r$`self_cal/PDSI.tbl`
+    y0 <- y0_pdsi
 
-    sc_pdsi <- with(r$`original/potentials`,
+    sc_pdsi <- with(df,
                     pdsi(P*25.4, PE*25.4, start = 1893, AWC = 12.18*25.4,
                          sc = TRUE, cal_start = 1961, cal_end = 1990))
     y1 <- sc_pdsi$X

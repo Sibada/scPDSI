@@ -6,4 +6,5 @@
 *.o
 *.so
 src/*.dll
-inst/
+# inst/
+*.pdf
